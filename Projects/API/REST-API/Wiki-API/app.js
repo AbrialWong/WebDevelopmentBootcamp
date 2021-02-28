@@ -1,5 +1,5 @@
 // jshint esversion: 6
-// Chained route handlers using express
+// Task: Get a Specific Article
 
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -25,6 +25,7 @@ content : String
 // 3. Create "article" collection using mongoose
 const Article = mongoose.model('Article', articlesSchema);
 
+/////////////////////////// Request Targeting All Articles /////// //////////
 app.route("/articles")
 
 .get(function(req,res){
@@ -63,6 +64,24 @@ app.route("/articles")
     }
     });
     });
+
+/////////////////////////// Request Targeting A Specific Articles /////// //////////
+
+app.route("/articles/:articleTitle")
+
+.get(function(req,res){
+    
+    
+    
+    Article.findOne({title:req.params.articleTitle }, function(err, foundArticle){
+        if (foundArticle){
+            res.send(foundArticle);
+        }else{
+            res.send("No articles matching that title was found.");
+        }
+    });
+});
+
 
 // Set app to listen to port 3000
 app.listen("3000", function(){

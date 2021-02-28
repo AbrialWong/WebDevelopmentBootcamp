@@ -1,4 +1,5 @@
 // jshint esversion: 6
+// Chained route handlers using express
 
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -24,17 +25,19 @@ content : String
 // 3. Create "article" collection using mongoose
 const Article = mongoose.model('Article', articlesSchema);
 
-app.get("/articles", function(req,res){
-Article.find({}, function(err,foundArticles){
-    if(!err){
-    res.send(foundArticles);
-} else{
-    res.send(err);
-}
-});
-});
+app.route("/articles")
 
-app.post("/articles", function(req,res){
+.get(function(req,res){
+    Article.find({}, function(err,foundArticles){
+        if(!err){
+        res.send(foundArticles);
+    } else{
+        res.send(err);
+    }
+    });
+})
+
+.post(function(req,res){
     console.log("Title: "+ req.body.title);
     console.log("Content: "+ req.body.content);
 
@@ -49,18 +52,17 @@ app.post("/articles", function(req,res){
             res.send(err);
         }
     });
-});
+})
 
-// Delete all articles
-app.delete("/articles", function(req,res){
-Article.deleteMany(function(err){
-if(!err){
-    res.send("Successfully deleted all articles.");
-}else{
-    res.send(err);
-}
-});
-});
+.delete(function(req,res){
+    Article.deleteMany(function(err){
+    if(!err){
+        res.send("Successfully deleted all articles.");
+    }else{
+        res.send(err);
+    }
+    });
+    });
 
 // Set app to listen to port 3000
 app.listen("3000", function(){

@@ -1,5 +1,5 @@
 // jshint esversion: 6
-// Task: Patch a Specific Article
+// Task: Delete a Specific Article
 
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -104,6 +104,19 @@ app.route("/articles/:articleTitle")
             }
         } 
         );
+})
+
+.delete(function(req,res){
+    Article.deleteOne(
+        {title: req.params.article.articleTitle},
+        function(err){
+            if(!err){
+                res.send("Successfully deleted the corresponding articles")
+            }else{
+                res.send(err);
+            }
+        }
+);
 });
 
 

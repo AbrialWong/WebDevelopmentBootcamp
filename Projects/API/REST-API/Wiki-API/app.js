@@ -1,5 +1,5 @@
 // jshint esversion: 6
-// Task: Put a Specific Article
+// Task: Patch a Specific Article
 
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -90,6 +90,20 @@ app.route("/articles/:articleTitle")
                 res.send("No Articles have been updated.")
             }
         })
+})
+
+.patch(function(req,res){
+    Article.update(
+        {title: req.params.articleTitle},
+        {$set: req.body},
+        function(err){
+            if(!err){
+                res.send("Successfully update articles");
+            } else{
+                res.send(err);
+            }
+        } 
+        );
 });
 
 

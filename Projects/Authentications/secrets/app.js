@@ -1,12 +1,12 @@
 //jshint esversion:6
-// Task: Using Environment Variables to Keep Secrets safe
+// Task: Hashing password
 
 require('dotenv').config(); // Step 1: Define env variable
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
-const encrypt = require("mongoose-encryption");
+const md5 = require("md5");
 
 const app = express();
 
@@ -24,8 +24,6 @@ const userSchema = new mongoose.Schema( {
     email: String,
     password: String
 });
-
-userSchema.plugin(encrypt,{secret: process.env.SECRET, encryptedFields:["password"]}); // adding the encryption plugin for the schema
 
 const User = new mongoose.model("User", userSchema);
 
@@ -45,7 +43,7 @@ app.post("/register", function(req,res){
 
 const newUser = new User({
 email: req.body.username,
-password: req.body.password
+password: md5(req.body.password) // turn this into a irreversible hash
 });
 
 newUser.save(function(err){
@@ -58,8 +56,9 @@ newUser.save(function(err){
 });
 
 app.post("/login", function(req,res){
+    
 const username = req.body.username;
-const password = req.body.password;
+const password = md5(req.body.password);
 
 User.findOne({email:username}, function(err, foundUser){
 if(err){

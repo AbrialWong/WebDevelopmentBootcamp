@@ -1,6 +1,7 @@
 //jshint esversion:6
-// Task: Database Encryption
+// Task: Using Environment Variables to Keep Secrets safe
 
+require('dotenv').config(); // Step 1: Define env variable
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
@@ -8,6 +9,9 @@ const mongoose = require("mongoose");
 const encrypt = require("mongoose-encryption");
 
 const app = express();
+
+console.log(process.env.API_KEY);
+
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({
@@ -21,8 +25,7 @@ const userSchema = new mongoose.Schema( {
     password: String
 });
 
-const secret = "Thisisourlittlesecret.";
-userSchema.plugin(encrypt,{secret:secret , encryptedFields:["password"]}); // adding the encryption plugin for the schema
+userSchema.plugin(encrypt,{secret: process.env.SECRET, encryptedFields:["password"]}); // adding the encryption plugin for the schema
 
 const User = new mongoose.model("User", userSchema);
 

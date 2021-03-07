@@ -1,6 +1,6 @@
 //jshint esversion:6
-// Task: Add Cookies & Sessions using Passport
-// resource: https://www.npmjs.com/package/express-session
+// Task: 3rd party OAuth2.0 (eg. facebook,gmail)
+// resource: 
 // http://www.passportjs.org/docs/downloads/html/
 
 require('dotenv').config(); // Step 1: Define env variable

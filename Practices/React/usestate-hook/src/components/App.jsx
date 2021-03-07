@@ -1,20 +1,28 @@
 import React, { useState } from "react";
 
 function App(){
-const state = useState(123);
+  //const state = useState(123); // useState(n) :- n is the initial state
 
-console.log(state[0]);
+  const [count, setCount] = useState(0); 
 
-function increase (){
-  //count ++;
-}
+  /* Destructuring Examples */
+  const [red, green, blue] = [234, 134, 133];
+
+  function decrease(){
+    setCount(count -1);
+  }
+
+function increase(){
+  //count++;
+  setCount(count + 1);
+  }  
 
 return (
-  <div className="container">
-    <h1>{state[0]}</h1>
+  <div className = "container">
+    <h1>{count}</h1>
     <button onClick={increase}>+</button>
-  </div>,
-  document.getElementById("root")
+    <button onClick={decrease}>-</button>
+  </div>
 );
 
 }

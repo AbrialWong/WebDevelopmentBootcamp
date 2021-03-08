@@ -1,3 +1,4 @@
+
 /*---------------------- Array ----------------------*/
 const animals = [
   { name: "cat", sound: "meow", feedingRequirements:{

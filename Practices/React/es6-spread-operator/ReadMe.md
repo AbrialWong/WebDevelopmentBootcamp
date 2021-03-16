@@ -1,3 +1,0 @@
-/* ----- Notes -----------*/
-Spread Operator
-> [syntax]  is ...
